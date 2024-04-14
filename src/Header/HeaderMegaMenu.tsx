@@ -155,7 +155,7 @@ import {
   
             <Group visibleFrom="sm">
               <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button onClick={signUp}>Sign up</Button>
             </Group>
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
