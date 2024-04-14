@@ -17,6 +17,7 @@ import {
     rem,
     useMantineTheme,
   } from '@mantine/core';
+  import { useNavigate } from 'react-router-dom';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
   import {
@@ -66,8 +67,11 @@ import {
   export function HeaderMegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-    const SignUp = '../SignUp/AuthenticationForm.tsx'
     const theme = useMantineTheme();
+    //ページ遷移宣言
+    const navigate = useNavigate();
+    const signUp = () => navigate(`signUp`);
+    
   
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
@@ -196,7 +200,7 @@ import {
   
             <Group justify="center" grow pb="xl" px="md">
               <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button onClick={signUp}>Sign up</Button>
             </Group>
           </ScrollArea>
         </Drawer>
