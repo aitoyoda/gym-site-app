@@ -17,6 +17,8 @@ import {
     rem,
     useMantineTheme,
   } from '@mantine/core';
+  import { useNavigate } from 'react-router-dom';
+  import { Link } from 'react-router-dom';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
   import {
@@ -66,8 +68,12 @@ import {
   export function HeaderMegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
-    const SignUp = '../SignUp/AuthenticationForm.tsx'
     const theme = useMantineTheme();
+    //ページ遷移宣言
+    const navigate = useNavigate();
+    const signUp = () => navigate(`signUp`);
+    const home = () => navigate(`home`)
+    
   
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
@@ -94,9 +100,9 @@ import {
             <MantineLogo size={30} />
   
             <Group h="100%" gap={0} visibleFrom="sm">
-              <a href="#" className={classes.link}>
+              <Link to="/" className={classes.link}>
                 Home
-              </a>
+              </Link>
               <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
@@ -151,7 +157,7 @@ import {
   
             <Group visibleFrom="sm">
               <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button onClick={signUp}>Sign up</Button>
             </Group>
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
@@ -170,9 +176,9 @@ import {
           <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
             <Divider my="sm" />
   
-            <a href="#" className={classes.link}>
+            <Link to="/" className={classes.link}>
               Home
-            </a>
+            </Link>
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
                 <Box component="span" mr={5}>
@@ -196,7 +202,7 @@ import {
   
             <Group justify="center" grow pb="xl" px="md">
               <Button variant="default">Log in</Button>
-              <Button>Sign up</Button>
+              <Button onClick={signUp}>Sign up</Button>
             </Group>
           </ScrollArea>
         </Drawer>

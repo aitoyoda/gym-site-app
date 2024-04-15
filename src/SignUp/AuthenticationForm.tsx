@@ -8,7 +8,7 @@ import {
   Group,
   PaperProps,
   Button,
-  Divider,
+  // Divider,
   Checkbox,
   Anchor,
   Stack,
@@ -35,7 +35,7 @@ export function AuthenticationForm(props: PaperProps) {
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" fw={500}>
-        Welcome to Mantine, {type} with
+        Welcome to Gym site, {type} with
       </Text>
 
       {/* GoogleボタンとTwitterボタンを削除 */}
@@ -44,7 +44,7 @@ export function AuthenticationForm(props: PaperProps) {
         <TwitterButton radius="xl">Twitter</TwitterButton>
       </Group> */}
 
-      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+      {/* <Divider label="Or continue with email" labelPosition="center" my="lg" /> */}
 
       <form onSubmit={form.onSubmit(() => {})}>
         <Stack>
