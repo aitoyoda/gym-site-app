@@ -18,6 +18,7 @@ import {
     useMantineTheme,
   } from '@mantine/core';
   import { useNavigate } from 'react-router-dom';
+  import { Link } from 'react-router-dom';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
   import {
@@ -71,6 +72,7 @@ import {
     //ページ遷移宣言
     const navigate = useNavigate();
     const signUp = () => navigate(`signUp`);
+    const home = () => navigate(`home`)
     
   
     const links = mockdata.map((item) => (
@@ -98,9 +100,9 @@ import {
             <MantineLogo size={30} />
   
             <Group h="100%" gap={0} visibleFrom="sm">
-              <a href="#" className={classes.link}>
+              <Link to="/" className={classes.link}>
                 Home
-              </a>
+              </Link>
               <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
@@ -174,9 +176,9 @@ import {
           <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
             <Divider my="sm" />
   
-            <a href="#" className={classes.link}>
+            <Link to="/" className={classes.link}>
               Home
-            </a>
+            </Link>
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
                 <Box component="span" mr={5}>
