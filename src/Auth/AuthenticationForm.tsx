@@ -8,16 +8,21 @@ import {
   Group,
   PaperProps,
   Button,
-  // Divider,
+  Divider,
   Checkbox,
   Anchor,
   Stack,
 } from '@mantine/core';
-// import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
-// import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
+import { useLocation } from 'react-router-dom';
+import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
+import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
+// firebaseのインポート
+import { getAuth, createUserWithEmailAndPassword } from '../firebase';
 
 export function AuthenticationForm(props: PaperProps) {
-  const [type, toggle] = useToggle(['login', 'register']);
+  const location = useLocation();
+  const path = location.pathname;
+  const type = path === '/LogIn' ? 'login' : 'register';
   const form = useForm({
     initialValues: {
       email: '',
@@ -32,6 +37,21 @@ export function AuthenticationForm(props: PaperProps) {
     },
   });
 
+
+  //新規登録関数
+  const addUser = async () => {
+    const auth = getAuth();
+    try {
+        const { email, password } = form.values;
+        // Firebase Authentication を使用してユーザーを登録
+        await createUserWithEmailAndPassword(auth, email, password);
+        alert('ユーザー登録が完了しました！');
+    } catch (error) {
+        console.error('ユーザー登録エラー:', error);
+        alert('ユーザー登録に失敗しました。');
+    }
+};
+
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" fw={500}>
@@ -39,14 +59,18 @@ export function AuthenticationForm(props: PaperProps) {
       </Text>
 
       {/* GoogleボタンとTwitterボタンを削除 */}
-      {/* <Group grow mb="md" mt="md">
+      <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
-      </Group> */}
+      </Group>
 
-      {/* <Divider label="Or continue with email" labelPosition="center" my="lg" /> */}
+      <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
-      <form onSubmit={form.onSubmit(() => {})}>
+      <form onSubmit={form.onSubmit(() => {
+        if (type === 'register') {
+          addUser();
+        }
+      })}>
         <Stack>
         {type === 'register' && (
             <TextInput
@@ -86,18 +110,11 @@ export function AuthenticationForm(props: PaperProps) {
             />
         )}
         </Stack>
+        
+        <Button type="submit" radius="xl">
+          {upperFirst(type)}
+        </Button>
 
-
-        <Group justify="space-between" mt="xl">
-          <Anchor component="button" type="button" c="dimmed" onClick={() => toggle()} size="xs">
-            {type === 'register'
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
-          </Anchor>
-          <Button type="submit" radius="xl">
-            {upperFirst(type)}
-          </Button>
-        </Group>
       </form>
     </Paper>
   );

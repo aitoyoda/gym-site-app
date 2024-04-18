@@ -71,8 +71,8 @@ import {
     const theme = useMantineTheme();
     //ページ遷移宣言
     const navigate = useNavigate();
-    const signUp = () => navigate(`signUp`);
-    const home = () => navigate(`home`)
+    const SignUp = () => navigate(`SignUp`);
+    const LogIn = () => navigate(`LogIn`);
     
   
     const links = mockdata.map((item) => (
@@ -156,8 +156,8 @@ import {
             </Group>
   
             <Group visibleFrom="sm">
-              <Button variant="default">Log in</Button>
-              <Button onClick={signUp}>Sign up</Button>
+              <Button variant="default" onClick={LogIn}>Log in</Button>
+              <Button onClick={SignUp}>Sign up</Button>
             </Group>
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
@@ -201,8 +201,8 @@ import {
             <Divider my="sm" />
   
             <Group justify="center" grow pb="xl" px="md">
-              <Button variant="default">Log in</Button>
-              <Button onClick={signUp}>Sign up</Button>
+              <Button variant="default" onClick={LogIn}>Log in</Button>
+              <Button onClick={SignUp}>Sign up</Button>
             </Group>
           </ScrollArea>
         </Drawer>
