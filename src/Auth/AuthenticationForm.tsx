@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
+import { upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
   TextInput,
@@ -10,10 +10,9 @@ import {
   Button,
   Divider,
   Checkbox,
-  Anchor,
   Stack,
 } from '@mantine/core';
-import { useLocation } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
 import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
 // firebaseのインポート
@@ -59,6 +58,7 @@ export function AuthenticationForm(props: PaperProps) {
       // Firebase Authentication を使用してユーザーをログイン
       await signInWithEmailAndPassword(auth, email, password);
       alert('ログインに成功しました！');
+      sessionStorage.setItem('isLoggedIn', 'true');
     } catch (error) {
       console.error('ログインエラー:', error);
       alert('ログインに失敗しました。');

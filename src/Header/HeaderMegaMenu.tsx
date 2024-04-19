@@ -17,8 +17,8 @@ import {
     rem,
     useMantineTheme,
   } from '@mantine/core';
-  import { useNavigate } from 'react-router-dom';
-  import { Link } from 'react-router-dom';
+  import { useState, useEffect } from 'react';
+  import { Link, useNavigate } from 'react-router-dom';
   import { MantineLogo } from '@mantinex/mantine-logo';
   import { useDisclosure } from '@mantine/hooks';
   import {
@@ -31,6 +31,7 @@ import {
     IconChevronDown,
   } from '@tabler/icons-react';
   import classes from './HeaderMegaMenu.module.css';
+  import { UserButton } from './UserButton';
   
   const mockdata = [
     {
@@ -64,6 +65,10 @@ import {
       description: 'Combusken battles with the intensely hot flames it spews',
     },
   ];
+
+  //ログイン管理
+  const isLoggedIn = () => sessionStorage.getItem('isLoggedIn') === 'true';
+  console.log(isLoggedIn());
   
   export function HeaderMegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
@@ -73,8 +78,9 @@ import {
     const navigate = useNavigate();
     const SignUp = () => navigate(`SignUp`);
     const LogIn = () => navigate(`LogIn`);
+
+    const [loggedIn, setLoggedIn] = useState(isLoggedIn()); 
     
-  
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
         <Group wrap="nowrap" align="flex-start">
@@ -92,6 +98,29 @@ import {
         </Group>
       </UnstyledButton>
     ));
+
+    useEffect(() => {
+      const checkLoginStatus = () => {
+        setLoggedIn(isLoggedIn());
+      };
+    
+      checkLoginStatus(); // コンポーネントがマウントされたときに初回チェック
+      const interval = setInterval(checkLoginStatus, 1000); // 1秒ごとにログイン状態をチェック
+    
+      return () => clearInterval(interval); // アンマウント時にインターバルをクリア
+    }, []);
+
+
+    const loginIconToggle = loggedIn ? (
+      <Group>
+        <UserButton />
+      </Group>
+    ) : (
+      <Group justify="center" grow pb="xl" px="md">
+        <Button variant="default" onClick={LogIn}>ログイン</Button>
+        <Button onClick={SignUp}>サインアップ</Button>
+      </Group>
+    );
   
     return (
       <Box pb={120}>
@@ -101,14 +130,14 @@ import {
   
             <Group h="100%" gap={0} visibleFrom="sm">
               <Link to="/" className={classes.link}>
-                Home
+                About
               </Link>
               <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
                     <Center inline>
                       <Box component="span" mr={5}>
-                        Features
+                        Memberships
                       </Box>
                       <IconChevronDown
                         style={{ width: rem(16), height: rem(16) }}
@@ -148,17 +177,21 @@ import {
                 </HoverCard.Dropdown>
               </HoverCard>
               <a href="#" className={classes.link}>
-                Learn
+                Location
               </a>
               <a href="#" className={classes.link}>
-                Academy
+                Pricing
+              </a>
+              <a href="/Contact" className={classes.link}>
+                Contact Us
               </a>
             </Group>
-  
-            <Group visibleFrom="sm">
+
+            {/* <Group visibleFrom="sm">
               <Button variant="default" onClick={LogIn}>Log in</Button>
               <Button onClick={SignUp}>Sign up</Button>
-            </Group>
+            </Group> */}
+            {loginIconToggle}
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
           </Group>
@@ -177,12 +210,12 @@ import {
             <Divider my="sm" />
   
             <Link to="/" className={classes.link}>
-              Home
+              About
             </Link>
             <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
                 <Box component="span" mr={5}>
-                  Features
+                  Memberships
                 </Box>
                 <IconChevronDown
                   style={{ width: rem(16), height: rem(16) }}
@@ -192,18 +225,23 @@ import {
             </UnstyledButton>
             <Collapse in={linksOpened}>{links}</Collapse>
             <a href="#" className={classes.link}>
-              Learn
+              Location
             </a>
             <a href="#" className={classes.link}>
-              Academy
+              Pricing
             </a>
+            <a href="Contact" className={classes.link}>
+              Contact Us
+            </a>
+
+            {loginIconToggle}
   
             <Divider my="sm" />
   
-            <Group justify="center" grow pb="xl" px="md">
+            {/* <Group justify="center" grow pb="xl" px="md">
               <Button variant="default" onClick={LogIn}>Log in</Button>
               <Button onClick={SignUp}>Sign up</Button>
-            </Group>
+            </Group> */}
           </ScrollArea>
         </Drawer>
       </Box>
