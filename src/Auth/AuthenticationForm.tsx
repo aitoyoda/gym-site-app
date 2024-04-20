@@ -37,9 +37,7 @@ export function AuthenticationForm(props: PaperProps) {
     },
   });
 
-  const auth = getAuth();
-
-  //新規登録関数
+  //新規登録
   const addUser = async () => {
     const auth = getAuth();
     try {
@@ -74,7 +72,7 @@ export function AuthenticationForm(props: PaperProps) {
         Welcome to Gym site, {type} with
       </Text>
 
-      {/* GoogleボタンとTwitterボタンを削除 */}
+      {/* googleとtwitterボタン */}
       <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
@@ -83,6 +81,7 @@ export function AuthenticationForm(props: PaperProps) {
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
       <form onSubmit={form.onSubmit(() => {
+        // フォーム送信先関数条件分岐
         if (type === 'register') {
           addUser();
         }else {

@@ -78,23 +78,24 @@ import {
 
     const [loggedIn, setLoggedIn] = useState(false);
     
-    const links = mockdata.map((item) => (
-      <UnstyledButton className={classes.subLink} key={item.title}>
-        <Group wrap="nowrap" align="flex-start">
-          <ThemeIcon size={34} variant="default" radius="md">
-            <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
-          </ThemeIcon>
-          <div>
-            <Text size="sm" fw={500}>
-              {item.title}
-            </Text>
-            <Text size="xs" c="dimmed">
-              {item.description}
-            </Text>
-          </div>
-        </Group>
-      </UnstyledButton>
-    ));
+    // ドロップダウンメニューのコンテンツ
+    // const links = mockdata.map((item) => (
+    //   <UnstyledButton className={classes.subLink} key={item.title}>
+    //     <Group wrap="nowrap" align="flex-start">
+    //       <ThemeIcon size={34} variant="default" radius="md">
+    //         <item.icon style={{ width: rem(22), height: rem(22) }} color={theme.colors.blue[6]} />
+    //       </ThemeIcon>
+    //       <div>
+    //         <Text size="sm" fw={500}>
+    //           {item.title}
+    //         </Text>
+    //         <Text size="xs" c="dimmed">
+    //           {item.description}
+    //         </Text>
+    //       </div>
+    //     </Group>
+    //   </UnstyledButton>
+    // ));
 
     useEffect(() => {
       // ログイン状態を監視
@@ -134,7 +135,13 @@ import {
               <Link to="/" className={classes.link}>
                 About
               </Link>
-              <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
+
+              <Link to="/Book" className={classes.link}>
+                Book a Workout
+              </Link>
+
+              {/* ドロップダウンメニュー */}
+              {/* <HoverCard width={600} position="bottom" radius="md" shadow="md" withinPortal>
                 <HoverCard.Target>
                   <a href="#" className={classes.link}>
                     <Center inline>
@@ -177,7 +184,7 @@ import {
                     </Group>
                   </div>
                 </HoverCard.Dropdown>
-              </HoverCard>
+              </HoverCard> */}
               <a href="#" className={classes.link}>
                 Location
               </a>
@@ -211,7 +218,10 @@ import {
             <Link to="/" className={classes.link}>
               About
             </Link>
-            <UnstyledButton className={classes.link} onClick={toggleLinks}>
+            <Link to="/" className={classes.link}>
+              Book a Workout
+            </Link>
+            {/* <UnstyledButton className={classes.link} onClick={toggleLinks}>
               <Center inline>
                 <Box component="span" mr={5}>
                   Memberships
@@ -222,7 +232,7 @@ import {
                 />
               </Center>
             </UnstyledButton>
-            <Collapse in={linksOpened}>{links}</Collapse>
+            <Collapse in={linksOpened}>{links}</Collapse> */}
             <a href="#" className={classes.link}>
               Location
             </a>

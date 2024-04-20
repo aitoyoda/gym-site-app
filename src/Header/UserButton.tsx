@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { UnstyledButton, Group, Avatar, Text, rem, Box, Collapse, ThemeIcon } from '@mantine/core';
 import { IconChevronRight, IconCalendarStats,IconLogout } from '@tabler/icons-react';
 import { onAuthStateChanged, getAuth, User,signOut } from '../firebase';
@@ -73,6 +73,16 @@ export function LinksGroup({ icon: Icon, label, initiallyOpened, links, onClick 
 
 export function UserButton() {
     const [menuOpened, setMenuOpened] = useState(false);
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        // ログイン状態を監視してユーザー情報を取得
+        const unsubscribe = onAuthStateChanged(getAuth(), (user: User | null) => {
+            setUser(user); // ユーザー情報をセット
+        });
+
+        return () => unsubscribe(); // コンポーネントがアンマウントされる時に監視を解除
+    }, []);
   
     return (
       <div className={classes.user}>
@@ -85,11 +95,11 @@ export function UserButton() {
   
             <div style={{ flex: 1 }}>
               <Text size="sm" fw={500}>
-                Harriette Spoonlicker
+                {user ? user.displayName : 'Guest'} {/* ユーザー名を表示 */}
               </Text>
   
               <Text c="dimmed" size="xs">
-                hspoonlicker@outlook.com
+                {user ? user.email : 'guest@example.com'} {/* メールアドレスを表示 */}
               </Text>
             </div>
   
