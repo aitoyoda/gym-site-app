@@ -32,7 +32,8 @@ import {
   } from '@tabler/icons-react';
   import classes from './HeaderMegaMenu.module.css';
   import { UserButton } from './UserButton';
-  
+  import { onAuthStateChanged, getAuth, User } from '../firebase';
+
   const mockdata = [
     {
       icon: IconCode,
@@ -66,10 +67,6 @@ import {
     },
   ];
 
-  //ログイン管理
-  const isLoggedIn = () => sessionStorage.getItem('isLoggedIn') === 'true';
-  console.log(isLoggedIn());
-  
   export function HeaderMegaMenu() {
     const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] = useDisclosure(false);
     const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -79,7 +76,7 @@ import {
     const SignUp = () => navigate(`SignUp`);
     const LogIn = () => navigate(`LogIn`);
 
-    const [loggedIn, setLoggedIn] = useState(isLoggedIn()); 
+    const [loggedIn, setLoggedIn] = useState(false);
     
     const links = mockdata.map((item) => (
       <UnstyledButton className={classes.subLink} key={item.title}>
@@ -100,14 +97,13 @@ import {
     ));
 
     useEffect(() => {
-      const checkLoginStatus = () => {
-        setLoggedIn(isLoggedIn());
-      };
-    
-      checkLoginStatus(); // コンポーネントがマウントされたときに初回チェック
-      const interval = setInterval(checkLoginStatus, 1000); // 1秒ごとにログイン状態をチェック
-    
-      return () => clearInterval(interval); // アンマウント時にインターバルをクリア
+      // ログイン状態を監視
+      const unsubscribe = onAuthStateChanged(getAuth(), (user: User | null) => {
+        setLoggedIn(user !== null); // ログイン状態を更新
+        console.log('ログイン状態:', user !== null ? 'ログイン中' : 'ログアウト中');
+      });
+  
+      return () => unsubscribe(); // アンマウント時に監視を解除
     }, []);
 
 
@@ -116,10 +112,16 @@ import {
         <UserButton />
       </Group>
     ) : (
-      <Group justify="center" grow pb="xl" px="md">
-        <Button variant="default" onClick={LogIn}>ログイン</Button>
-        <Button onClick={SignUp}>サインアップ</Button>
-      </Group>
+      <div className="loginBox">
+        <Group justify="center" grow pb="xl">
+          <Box px="md">
+            <Button variant="default" onClick={LogIn}>LogIn</Button>
+          </Box>
+          <Box>
+            <Button onClick={SignUp}>SignUp</Button>
+          </Box>
+        </Group>
+      </div>
     );
   
     return (
@@ -187,10 +189,7 @@ import {
               </a>
             </Group>
 
-            {/* <Group visibleFrom="sm">
-              <Button variant="default" onClick={LogIn}>Log in</Button>
-              <Button onClick={SignUp}>Sign up</Button>
-            </Group> */}
+            {/* ログイン関連トグル */}
             {loginIconToggle}
   
             <Burger opened={drawerOpened} onClick={toggleDrawer} hiddenFrom="sm" />
@@ -234,14 +233,11 @@ import {
               Contact Us
             </a>
 
+            {/* ログイン関連トグル */}
             {loginIconToggle}
   
             <Divider my="sm" />
-  
-            {/* <Group justify="center" grow pb="xl" px="md">
-              <Button variant="default" onClick={LogIn}>Log in</Button>
-              <Button onClick={SignUp}>Sign up</Button>
-            </Group> */}
+
           </ScrollArea>
         </Drawer>
       </Box>

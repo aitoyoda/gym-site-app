@@ -73,3 +73,13 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+/* header部分のcss */
+.m_4081bf90 {
+  /* flex-wrap: nowrap !important; */
+  align-items: flex-start !important;
+}
+
+.loginBox {
+  margin-top: 10px;
+}
