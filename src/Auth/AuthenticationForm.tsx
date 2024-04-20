@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react';
 import { upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
@@ -16,7 +17,7 @@ import { useNavigate,useLocation } from 'react-router-dom';
 import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
 import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
 // firebaseのインポート
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../firebase';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged } from '../firebase';
 
 export function AuthenticationForm(props: PaperProps) {
   const location = useLocation();
@@ -36,6 +37,7 @@ export function AuthenticationForm(props: PaperProps) {
     },
   });
 
+  const auth = getAuth();
 
   //新規登録関数
   const addUser = async () => {
@@ -51,6 +53,7 @@ export function AuthenticationForm(props: PaperProps) {
     }
   };
 
+  //ログイン
   const login = async () => {
     const auth = getAuth();
     try {
