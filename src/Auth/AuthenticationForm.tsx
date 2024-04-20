@@ -1,4 +1,4 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
+import { upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
   TextInput,
@@ -10,14 +10,13 @@ import {
   Button,
   Divider,
   Checkbox,
-  Anchor,
   Stack,
 } from '@mantine/core';
-import { useLocation } from 'react-router-dom';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
 import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
 // firebaseのインポート
-import { getAuth, createUserWithEmailAndPassword } from '../firebase';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../firebase';
 
 export function AuthenticationForm(props: PaperProps) {
   const location = useLocation();
@@ -50,7 +49,21 @@ export function AuthenticationForm(props: PaperProps) {
         console.error('ユーザー登録エラー:', error);
         alert('ユーザー登録に失敗しました。');
     }
-};
+  };
+
+  const login = async () => {
+    const auth = getAuth();
+    try {
+      const { email, password } = form.values;
+      // Firebase Authentication を使用してユーザーをログイン
+      await signInWithEmailAndPassword(auth, email, password);
+      alert('ログインに成功しました！');
+      sessionStorage.setItem('isLoggedIn', 'true');
+    } catch (error) {
+      console.error('ログインエラー:', error);
+      alert('ログインに失敗しました。');
+    }
+  };
 
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
@@ -69,6 +82,8 @@ export function AuthenticationForm(props: PaperProps) {
       <form onSubmit={form.onSubmit(() => {
         if (type === 'register') {
           addUser();
+        }else {
+          login();
         }
       })}>
         <Stack>

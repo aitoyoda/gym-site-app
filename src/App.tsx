@@ -5,6 +5,7 @@ import { MantineProvider } from "@mantine/core";
 import { HeaderMegaMenu } from "./Header/HeaderMegaMenu";
 import Home from './Route/Home';
 import Auth from './Route/Auth';
+import Contact from './Route/Contact';
 
 const App: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Home />} />
           <Route path="/SignUp" element={<Auth />} />
           <Route path="/LogIn" element={<Auth />} />
+          <Route path="/Contact" element={<Contact />} />
         </Routes>
       </MantineProvider>
     </Router>
