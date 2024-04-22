@@ -37,9 +37,7 @@ export function AuthenticationForm(props: PaperProps) {
     },
   });
 
-  const auth = getAuth();
-
-  //新規登録関数
+  //新規登録
   const addUser = async () => {
     const auth = getAuth();
     try {
@@ -47,6 +45,11 @@ export function AuthenticationForm(props: PaperProps) {
         // Firebase Authentication を使用してユーザーを登録
         await createUserWithEmailAndPassword(auth, email, password);
         alert('ユーザー登録が完了しました！');
+        //フォームクリア
+        form.setFieldValue('email', '');
+        form.setFieldValue('name', '');
+        form.setFieldValue('password', ''); 
+        form.setFieldValue('terms', false);
     } catch (error) {
         console.error('ユーザー登録エラー:', error);
         alert('ユーザー登録に失敗しました。');
@@ -62,6 +65,9 @@ export function AuthenticationForm(props: PaperProps) {
       await signInWithEmailAndPassword(auth, email, password);
       alert('ログインに成功しました！');
       sessionStorage.setItem('isLoggedIn', 'true');
+      //フォームクリア
+      form.setFieldValue('email', ''); 
+      form.setFieldValue('password', '');
     } catch (error) {
       console.error('ログインエラー:', error);
       alert('ログインに失敗しました。');
@@ -74,7 +80,7 @@ export function AuthenticationForm(props: PaperProps) {
         Welcome to Gym site, {type} with
       </Text>
 
-      {/* GoogleボタンとTwitterボタンを削除 */}
+      {/* googleとtwitterボタン */}
       <Group grow mb="md" mt="md">
         <GoogleButton radius="xl">Google</GoogleButton>
         <TwitterButton radius="xl">Twitter</TwitterButton>
@@ -83,6 +89,7 @@ export function AuthenticationForm(props: PaperProps) {
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
       <form onSubmit={form.onSubmit(() => {
+        // フォーム送信先関数条件分岐
         if (type === 'register') {
           addUser();
         }else {
@@ -137,3 +144,5 @@ export function AuthenticationForm(props: PaperProps) {
     </Paper>
   );
 }
+
+export default AuthenticationForm;
