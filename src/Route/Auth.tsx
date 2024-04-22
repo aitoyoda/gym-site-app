@@ -1,9 +1,9 @@
 import React from 'react';
-import { AuthenticationForm } from '../Auth/AuthenticationForm';
+import AuthPage from '../Auth/Page';
 
 const Auth: React.FC = () => {
   return (
-      <AuthenticationForm />
+    <AuthPage />
   );
 }
 

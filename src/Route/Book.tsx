@@ -1,9 +1,9 @@
 import React from 'react';
-import { StatsControls } from '../Book/BookWork';
+import BookPage from '../Book/Page';
 
 const Book: React.FC = () => {
   return (
-      <StatsControls />
+      <BookPage />
   );
 }
 

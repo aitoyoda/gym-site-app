@@ -46,3 +46,5 @@ export function GetInTouch() {
     </Paper>
   );
 }
+
+export default GetInTouch;

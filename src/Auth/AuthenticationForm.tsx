@@ -45,6 +45,11 @@ export function AuthenticationForm(props: PaperProps) {
         // Firebase Authentication を使用してユーザーを登録
         await createUserWithEmailAndPassword(auth, email, password);
         alert('ユーザー登録が完了しました！');
+        //フォームクリア
+        form.setFieldValue('email', '');
+        form.setFieldValue('name', '');
+        form.setFieldValue('password', ''); 
+        form.setFieldValue('terms', false);
     } catch (error) {
         console.error('ユーザー登録エラー:', error);
         alert('ユーザー登録に失敗しました。');
@@ -60,6 +65,9 @@ export function AuthenticationForm(props: PaperProps) {
       await signInWithEmailAndPassword(auth, email, password);
       alert('ログインに成功しました！');
       sessionStorage.setItem('isLoggedIn', 'true');
+      //フォームクリア
+      form.setFieldValue('email', ''); 
+      form.setFieldValue('password', '');
     } catch (error) {
       console.error('ログインエラー:', error);
       alert('ログインに失敗しました。');
@@ -136,3 +144,5 @@ export function AuthenticationForm(props: PaperProps) {
     </Paper>
   );
 }
+
+export default AuthenticationForm;
