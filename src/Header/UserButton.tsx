@@ -111,7 +111,7 @@ export function UserButton() {
           <IconChevronRight style={{ width: rem(14), height: rem(14) }} stroke={1.5} />
         </Group>
       </UnstyledButton>
-      <Collapse in={menuOpened} transition="fade">
+      <Collapse in={menuOpened}>
         <div className={classes.dropdown}>
           <LinksGroup {...sampleData} />
           <LinksGroup {...logoutData} onClick={logout} />

@@ -1,10 +1,25 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["types/*"]
+    },
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "plugins": [
+      {
+        "name": "typescript-plugin-css-modules",
+        "options": {
+          "globPattern": "src/**/*.css", // CSS ファイルのパス
+          "postCssPlugins": [], // オプション: PostCSS プラグイン
+          "camelCase": true, // クラス名をキャメルケースに変換するかどうか
+          "outDir": "src/types" // 型定義ファイルの出力先ディレクトリ
+        }
+      }
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

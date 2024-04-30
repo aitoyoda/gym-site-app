@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { upperFirst } from '@mantine/hooks';
 import { useForm } from '@mantine/form';
 import {
@@ -13,11 +12,11 @@ import {
   Checkbox,
   Stack,
 } from '@mantine/core';
-import { useNavigate,useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { GoogleButton } from './GoogleButton'; // Googleボタンのimportをコメントアウト
 import { TwitterButton } from './TwitterButton'; // Twitterボタンのimportをコメントアウト
 // firebaseのインポート
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,onAuthStateChanged } from '../firebase';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../firebase';
 
 export function AuthenticationForm(props: PaperProps) {
   const location = useLocation();
