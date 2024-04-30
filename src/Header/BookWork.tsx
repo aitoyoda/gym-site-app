@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { UnstyledButton, Text, Paper, Group, rem,Tabs, } from '@mantine/core';
+import { UnstyledButton, Text, Paper, Group, rem, } from '@mantine/core';
 import {
   IconSwimming,
   IconBike,
