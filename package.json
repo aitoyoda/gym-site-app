@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@mantine/core": "7.0.0",
+    "@mantine/form": "^7.8.1",
     "@mantine/hooks": "7.0.0",
     "@mantinex/dev-icons": "^1.0.2",
     "@mantinex/mantine-logo": "^1.0.1",
+    "@tabler/icons-react": "^3.2.0",
     "@types/firebase": "^3.2.1",
+    "dayjs": "^1.11.11",
     "firebase": "^10.11.0",
     "firebase-tools": "^13.7.3",
     "react": "^18.2.0",
